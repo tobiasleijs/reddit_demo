@@ -52,11 +52,14 @@ class PostPreview extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12.0),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -98,11 +101,20 @@ class PostPreview extends StatelessWidget {
                       SizedBox(width: 40.0),
                     ],
                   ),
-                  Icon(
-                    Icons.comment_rounded,
-                    size: 40.0,
-                    color: Color.fromARGB(255, 125, 125, 125),
-                  )
+                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Icon(
+                      Icons.comment_rounded,
+                      size: 40.0,
+                      color: Color.fromARGB(255, 125, 125, 125),
+                    ),
+                    SizedBox(width: 10.0),
+                    Text(
+                      '138',
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          color: Color.fromARGB(255, 125, 125, 125)),
+                    ),
+                  ]),
                 ],
               ),
             ],
