@@ -42,3 +42,17 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+# Project specific files
+.env
+dotenv
+.firebaserc
+.firebase/
+
+# The Demo App doesn't work for these platforms
+linux/
+windows/
+web/
+fuchsia/
+macos/
