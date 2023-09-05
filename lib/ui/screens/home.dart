@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_app/ui/widgets/post_preview.dart';
+import 'package:reddit_app/ui/widgets/posts/post_preview.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
