@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_app/ui/widgets/post_preview.dart';
+import 'package:reddit_app/ui/widgets/posts/post_preview.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,19 +20,19 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             PostPreview(
-                photo: 'soccer.png',
+                photo: 'subreddits/soccer.png',
                 title: 'Why Ajax will win the Europa League',
                 subreddit: 'r/soccer',
                 description:
                     'Ajax has all the ingredients to emerge victorious in the Europa League this season. With their relentless attacking prowess, skillful midfielders, and a solid defense, they\'ve shown an unwavering determination to claim the title. Under the astute guidance of their coach, their tactical acumen and ability to adapt to different opponents have been impressive. Furthermore, their rich history and experience in European competitions give them the edge, and their young talents continue to shine on the international stage. With a perfect blend of youth and experience, Ajax is poised to conquer the Europa League and add another prestigious trophy to their illustrious legacy.'),
             PostPreview(
-                photo: 'valo.png',
+                photo: 'subreddits/valo.png',
                 title: 'How to get to radiant asap?',
                 subreddit: 'r/VALORANT',
                 description:
                     'Hey fellow Valorant players! I\'ve been grinding the ranks lately, and I\'m really eager to reach Radiant as soon as possible. Any tips or strategies you could share to help me climb the ladder quickly? I\'ve been working on my aim and communication, but I feel like there\'s more I can do to improve my game. Any agent recommendations or specific techniques that have worked for you in your journey to Radiant? Thanks in advance for the advice!'),
             PostPreview(
-                photo: 'f1.png',
+                photo: 'subreddits/f1.png',
                 title:
                     'How Max Verstappen got the record for most consecutive grand prix wins',
                 subreddit: 'r/formula1',
