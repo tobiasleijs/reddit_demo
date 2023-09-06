@@ -29,6 +29,7 @@ class PostHeader extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
+                color: Colors.black,
               ),
             ),
             if (undertitle.isNotEmpty) ...[
