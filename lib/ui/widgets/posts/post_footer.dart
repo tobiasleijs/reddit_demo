@@ -5,39 +5,42 @@ class PostFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            Icon(
-              Icons.arrow_circle_up_rounded,
-              size: 40,
-              color: Color.fromARGB(255, 125, 125, 125),
+            IconButton(
+              iconSize: 40,
+              icon: const Icon(Icons.arrow_circle_up),
+              color: const Color.fromARGB(255, 125, 125, 125),
+              onPressed: () {},
             ),
-            SizedBox(width: 10.0),
-            Text(
+            const SizedBox(width: 10.0),
+            const Text(
               '279',
               style: TextStyle(
                   fontSize: 24.0, color: Color.fromARGB(255, 125, 125, 125)),
             ),
-            SizedBox(width: 10.0),
-            Icon(
-              Icons.arrow_circle_down_rounded,
-              size: 40,
-              color: Color.fromARGB(255, 125, 125, 125),
+            const SizedBox(width: 10.0),
+            IconButton(
+              iconSize: 40,
+              icon: const Icon(Icons.arrow_circle_down),
+              color: const Color.fromARGB(255, 125, 125, 125),
+              onPressed: () {},
             ),
-            SizedBox(width: 40.0),
+            const SizedBox(width: 40.0),
           ],
         ),
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Icon(
-            Icons.comment_rounded,
-            size: 40.0,
-            color: Color.fromARGB(255, 125, 125, 125),
+          IconButton(
+            iconSize: 40,
+            icon: const Icon(Icons.comment_rounded),
+            color: const Color.fromARGB(255, 125, 125, 125),
+            onPressed: () {},
           ),
-          SizedBox(width: 10.0),
-          Text(
+          const SizedBox(width: 10.0),
+          const Text(
             '138',
             style: TextStyle(
                 fontSize: 24.0, color: Color.fromARGB(255, 125, 125, 125)),

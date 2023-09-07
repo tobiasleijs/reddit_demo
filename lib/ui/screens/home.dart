@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_app/ui/widgets/posts/post_preview.dart';
+import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Reddit Home'),
         centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 63, 61, 61),
       ),
       body: const SingleChildScrollView(
         child: Column(
@@ -41,19 +43,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF499167),
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const ScaffoldFooter(),
     );
   }
 }

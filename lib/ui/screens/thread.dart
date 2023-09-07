@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_app/ui/widgets/comments/comment.dart';
 import 'package:reddit_app/ui/widgets/posts/post_extended.dart';
+import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
 
 class Post extends StatefulWidget {
   const Post({super.key});
@@ -54,6 +55,7 @@ class _PostState extends State<Post> {
           ],
         ),
       ),
+      bottomNavigationBar: const ScaffoldFooter(),
     );
   }
 }
