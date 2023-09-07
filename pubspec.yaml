@@ -30,6 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_login: 
+      git:
+        url: https://github.com/Iconica-Development/flutter_login_widget.git
+  flutter_registration:
+      git:
+        url: https://github.com/Iconica-Development/flutter_registration.git
+  flutter_profile:
+      git:
+        url: https://github.com/Iconica-Development/flutter_profile.git
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,6 +70,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/subreddits/
+    - assets/users/
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
