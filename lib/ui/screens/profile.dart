@@ -86,7 +86,6 @@ class _ProfileExampleState extends State<ProfileExample> {
                 ),
               ),
             ),
-            const Text('test')
           ],
         ),
       ),
