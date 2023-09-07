@@ -37,8 +37,10 @@ class RedditApp extends StatelessWidget {
         builder: ((context, state) => const ProfileExample())),
     GoRoute(
         name: RouteNames.thread,
-        path: '/thread',
-        builder: ((context, state) => const Thread())),
+        path: '/thread/:post',
+        builder: ((context, state) => Thread(
+          post:int.parse(state.pathParameters['post']!)
+        ))),
     GoRoute(
         name: RouteNames.register,
         path: '/register',

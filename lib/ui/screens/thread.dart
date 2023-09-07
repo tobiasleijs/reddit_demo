@@ -1,57 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:reddit_app/persistence/DTO/comment_dto.dart';
+import 'package:reddit_app/persistence/DTO/post_dto.dart';
+import 'package:reddit_app/persistence/DTO/user_dto.dart';
+import 'package:reddit_app/persistence/DTO/subreddit_dto.dart';
+import 'package:reddit_app/persistence/persistence_adapter.dart';
+import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/widgets/comments/comment.dart';
 import 'package:reddit_app/ui/widgets/posts/post_extended.dart';
 import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
 
 class Thread extends StatefulWidget {
-  const Thread({super.key});
+  final int post;
+
+  const Thread({super.key, required this.post});
 
   @override
-  State<Thread> createState() => _ThreadState();
+  // ignore: no_logic_in_create_state
+  State<Thread> createState() => _ThreadState(post);
 }
 
 class _ThreadState extends State<Thread> {
-  String subreddit = 'r/VALORANT';
+  final int post;
+  PersistencePort database = PersistenceAdapter();
+  late SubredditDTO subredditDTO;
+  late PostDTO postDTO;
+  late UserDTO poster;
+
+  _ThreadState(this.post) {
+    postDTO = database.getPostFromId(post);
+    subredditDTO = database.getSubreddit(postDTO.subreddit);
+    poster = database.getUserFromId(postDTO.authorId);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: const Color(0xFF76F7BF),
       appBar: AppBar(
-        title: Text(subreddit),
+        title: Text(subredditDTO.name),
         centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 63, 61, 61),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             PostExtended(
-              photo: 'subreddits/valo.png',
-              subreddit: 'r/VALORANT',
-              undertitle: 'u/FreekVonk',
-              title: 'How to get to radiant asap?',
-              description:
-                  'Hey fellow Valorant players! I\'ve been grinding the ranks lately, and I\'m really eager to reach Radiant as soon as possible. Any tips or strategies you could share to help me climb the ladder quickly? I\'ve been working on my aim and communication, but I feel like there\'s more I can do to improve my game. Any agent recommendations or specific techniques that have worked for you in your journey to Radiant? Thanks in advance for the advice!',
+              photo: subredditDTO.image,
+              subreddit: subredditDTO.name,
+              undertitle: poster.title,
+              title: postDTO.title,
+              description: postDTO.body,
             ),
-            Comment(
-              avatar: 'users/rutte.jpg',
-              comment:
-                  'To quickly climb the Valorant ranks, prioritize aim training, communicate effectively, learn map details, master multiple agents, emphasize teamwork, manage your economy wisely, watch professional gameplay for tips, and strive for consistency in your performance.',
-              username: 'mrPresident',
-              role: 'demissionary',
-            ),
-            Comment(
-              avatar: 'users/trump.jpg',
-              comment:
-                  'Look, folks, you wouldn\'t believe the winning strategy I\'ve got for you in Valorant. Tremendous game, very tremendous. You\'ve got to aim big, okay? We\'re talking the best aim, folks, nobody aims better than me. And communication, let me tell you, nobody communicates like I do. My communication is beautiful, just beautiful. Build a team, a fantastic team, the best team, and make Valorant great again. That\'s what we\'re going to do, folks. Believe me.',
-              username: 'exPOTUS',
-              role: 'the_unimpeachable',
-            ),
-            Comment(
-              avatar: 'users/tenz.png',
-              comment: 'Just be me lol',
-              username: 'TenZ',
-              role: '#1 valorant player',
-            ),
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: database.getCommentsForPost(post).length,
+                itemBuilder: (context, index) {
+                  List<CommentDTO> comments = database.getCommentsForPost(post);
+                  UserDTO commenter =
+                      database.getUserFromId(comments[index].commenterId);
+                  return Comment(
+                      avatar: commenter.avatar,
+                      comment: comments[index].comment,
+                      role: commenter.title,
+                      username: commenter.username);
+                })
           ],
         ),
       ),

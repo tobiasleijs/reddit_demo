@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:reddit_app/utils/go_router.dart';
 
 class PostFooter extends StatelessWidget {
-  const PostFooter({super.key});
+  final postId;
+  const PostFooter({super.key, this.postId});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class PostFooter extends StatelessWidget {
             icon: const Icon(Icons.comment_rounded),
             color: const Color.fromARGB(255, 125, 125, 125),
             onPressed: () {
-              context.goNamed(RouteNames.thread);
+              context.goNamed(RouteNames.thread, pathParameters: {'post': '$postId'});
             },
           ),
           const SizedBox(width: 10.0),
