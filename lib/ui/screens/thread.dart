@@ -3,14 +3,14 @@ import 'package:reddit_app/ui/widgets/comments/comment.dart';
 import 'package:reddit_app/ui/widgets/posts/post_extended.dart';
 import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
 
-class Post extends StatefulWidget {
-  const Post({super.key});
+class Thread extends StatefulWidget {
+  const Thread({super.key});
 
   @override
-  State<Post> createState() => _PostState();
+  State<Thread> createState() => _ThreadState();
 }
 
-class _PostState extends State<Post> {
+class _ThreadState extends State<Thread> {
   String subreddit = 'r/VALORANT';
 
   @override

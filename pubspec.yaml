@@ -39,6 +39,7 @@ dependencies:
   flutter_profile:
       git:
         url: https://github.com/Iconica-Development/flutter_profile.git
+  go_router: ^10.1.2
 
 
 

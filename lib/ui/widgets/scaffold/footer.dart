@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:reddit_app/utils/go_router.dart';
 
 class ScaffoldFooter extends StatelessWidget {
   const ScaffoldFooter({super.key});
@@ -18,6 +20,13 @@ class ScaffoldFooter extends StatelessWidget {
           label: 'Profile',
         ),
       ],
+      onTap: (value) {
+        if (value == 0) {
+          context.goNamed(RouteNames.home);
+        } else if (value == 1) {
+          context.goNamed(RouteNames.profile);
+        }
+      },
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:reddit_app/utils/go_router.dart';
 
 class PostFooter extends StatelessWidget {
   const PostFooter({super.key});
@@ -37,7 +39,9 @@ class PostFooter extends StatelessWidget {
             iconSize: 40,
             icon: const Icon(Icons.comment_rounded),
             color: const Color.fromARGB(255, 125, 125, 125),
-            onPressed: () {},
+            onPressed: () {
+              context.goNamed(RouteNames.thread);
+            },
           ),
           const SizedBox(width: 10.0),
           const Text(
