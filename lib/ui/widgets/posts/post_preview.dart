@@ -8,6 +8,7 @@ class PostPreview extends StatelessWidget {
   final String subreddit;
   final String description;
   final int postId;
+  final int commentCount;
 
   const PostPreview(
       {super.key,
@@ -15,7 +16,8 @@ class PostPreview extends StatelessWidget {
       required this.title,
       required this.subreddit,
       required this.description,
-      required this.postId});
+      required this.postId,
+      required this.commentCount});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class PostPreview extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              PostFooter(postId: postId),
+              PostFooter(postId: postId, commentCount: commentCount,),
             ],
           ),
         ),

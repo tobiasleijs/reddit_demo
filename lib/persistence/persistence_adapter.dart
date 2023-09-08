@@ -42,6 +42,37 @@ class PersistenceAdapter implements PersistencePort {
             'Look, folks, you wouldn\'t believe the winning strategy I\'ve got for you in Valorant. Tremendous game, very tremendous. You\'ve got to aim big, okay? We\'re talking the best aim, folks, nobody aims better than me. And communication, let me tell you, nobody communicates like I do. My communication is beautiful, just beautiful. Build a team, a fantastic team, the best team, and make Valorant great again. That\'s what we\'re going to do, folks. Believe me.',
         postId: 2),
     const CommentModel(commenterId: 5, comment: 'Just be me lol', postId: 2),
+    const CommentModel(
+        commenterId: 2,
+        comment:
+            'Ajax certainly has the potential to win the Europa League, but they\'ll face tough competition from other clubs like Manchester United, Arsenal, and Napoli. It\'s all about performance on the day, and we\'ll have to wait and see how they handle the pressure.',
+        postId: 1),
+    const CommentModel(
+        commenterId: 4,
+        comment:
+            'Let me tell you, folks, Ajax is going to win the Europa League, and they\'re going to win it bigly! Believe me, I know winners, and Ajax is a winning team. No one else even comes close. It\'s going to be beautiful, folks, just beautiful.',
+        postId: 1),
+    const CommentModel(
+        commenterId: 0,
+        comment:
+            'While Ajax does have a strong team, let\'s not forget that the Europa League is a highly competitive tournament. There are several other quality teams in the mix, so it won\'t be a walk in the park for them. But, I\'m hoping for an exciting tournament!',
+        postId: 1),
+    const CommentModel(
+        commenterId: 3,
+        comment:
+            'Ajax has a strong squad and they\'ve shown great form recently. Their attacking prowess and solid defense make them a serious contender for the Europa League title. Let\'s go, Ajax!',
+        postId: 1),
+    const CommentModel(
+        commenterId: 1,
+        comment:
+            'Ajax has a rich history in European competitions, and their youth academy consistently produces top talent. However, it\'s essential to consider that football can be unpredictable. Anything can happen in knockout rounds, so let\'s enjoy the journey and see how far they can go!',
+        postId: 1),
+    const CommentModel(
+        commenterId: 6, comment: 'This guy is cheating', postId: 3),
+    const CommentModel(
+        commenterId: 7,
+        comment: 'MAX MAX MAX\nSUPER MAX MAX\nSUPER SUPER MAX MAX MAX',
+        postId: 3),
   ];
 
   List<UserModel> users = [
@@ -105,6 +136,26 @@ class PersistenceAdapter implements PersistencePort {
         remarks: '',
         avatar: 'users/tenz.png',
         title: '#1 valorant player'),
+    const UserModel(
+        id: 6,
+        username: 'LewisMercedes',
+        firstname: 'Lewis',
+        lastname: 'Hamilton',
+        email: 'LewisHamilton@mercedes.com',
+        about: 'His tyres are dead',
+        remarks: '',
+        avatar: 'users/hamilton.png',
+        title: 'Sir'),
+    const UserModel(
+        id: 7,
+        username: 'ThePitstopBoys',
+        firstname: 'Pitstop',
+        lastname: 'Boys',
+        email: 'thepitstopboys@yahoo.nl',
+        about: '',
+        remarks: '',
+        avatar: 'users/pitstopboys.jpg',
+        title: 'Sir'),
   ];
 
   List<SubredditModel> subreddits = [

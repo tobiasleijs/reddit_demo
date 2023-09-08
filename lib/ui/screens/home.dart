@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reddit_app/persistence/models/comment_model.dart';
 import 'package:reddit_app/persistence/models/post_model.dart';
 import 'package:reddit_app/persistence/persistence_adapter.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
@@ -14,7 +15,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   PersistencePort database = PersistenceAdapter();
   late List<PostModel> posts;
-
   _HomePageState() {
     posts = database.getPosts();
   }
@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
                     subreddit: post.subreddit,
                     description: post.body,
                     postId: post.id,
+                    commentCount: database.getCommentsForPost(post.id).length
                   );
                 })
           ],

@@ -52,6 +52,7 @@ class _ThreadState extends State<Thread> {
               title: postModel.title,
               description: postModel.body,
               postId: widget.post,
+              commentCount: database.getCommentsForPost(widget.post).length,
             ),
             ListView.builder(
                 shrinkWrap: true,
