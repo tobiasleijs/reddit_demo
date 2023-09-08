@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:reddit_app/utils/go_router.dart';
 
 class PostFooter extends StatelessWidget {
-  final postId;
-  const PostFooter({super.key, this.postId});
+  final int postId;
+  const PostFooter({super.key, required this.postId});
 
   @override
   Widget build(BuildContext context) {

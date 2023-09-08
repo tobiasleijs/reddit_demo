@@ -1,13 +1,13 @@
-import 'package:reddit_app/persistence/DTO/comment_dto.dart';
-import 'package:reddit_app/persistence/DTO/post_dto.dart';
-import 'package:reddit_app/persistence/DTO/subreddit_dto.dart';
-import 'package:reddit_app/persistence/DTO/user_dto.dart';
+import 'package:reddit_app/persistence/models/comment_model.dart';
+import 'package:reddit_app/persistence/models/post_model.dart';
+import 'package:reddit_app/persistence/models/subreddit_model.dart';
+import 'package:reddit_app/persistence/models/user_model.dart';
 
 abstract class PersistencePort {
-  PostDTO getPostFromId(int postId);
-  List<PostDTO> getPosts();
-  CommentDTO getCommentFromPostId(int postId);
-  List<CommentDTO> getCommentsForPost(int postId);
-  SubredditDTO getSubreddit(String name);
-  UserDTO getUserFromId(int userId);
+  PostModel getPostFromId(int postId);
+  List<PostModel> getPosts();
+  CommentModel getCommentFromPostId(int postId);
+  List<CommentModel> getCommentsForPost(int postId);
+  SubredditModel getSubreddit(String name);
+  UserModel getUserFromId(int userId);
 }

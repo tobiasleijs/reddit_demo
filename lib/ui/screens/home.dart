@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_app/persistence/DTO/post_dto.dart';
+import 'package:reddit_app/persistence/models/post_model.dart';
 import 'package:reddit_app/persistence/persistence_adapter.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/widgets/posts/post_preview.dart';
@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   PersistencePort database = PersistenceAdapter();
-  late List<PostDTO> posts;
+  late List<PostModel> posts;
 
   _HomePageState() {
     posts = database.getPosts();
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 itemCount: posts.length,
                 itemBuilder: (context, index) {
-                  PostDTO post = posts[index];
+                  PostModel post = posts[index];
                   return PostPreview(
                     photo: database.getSubreddit(post.subreddit).image,
                     title: post.title,

@@ -8,6 +8,7 @@ class PostExtended extends StatelessWidget {
   final String undertitle;
   final String title;
   final String description;
+  final int postId;
 
   const PostExtended(
       {super.key,
@@ -15,7 +16,8 @@ class PostExtended extends StatelessWidget {
       required this.subreddit,
       required this.undertitle,
       required this.title,
-      required this.description});
+      required this.description,
+      required this.postId});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class PostExtended extends StatelessWidget {
                         fontSize: 20,
                       )),
                   const SizedBox(height: 10.0),
-                  const PostFooter(),
+                  PostFooter(postId: postId,),
                 ],
               ),
             ),

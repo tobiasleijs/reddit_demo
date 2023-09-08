@@ -26,28 +26,27 @@ class RedditApp extends StatelessWidget {
   }
 
   final GoRouter _router = GoRouter(initialLocation: '/', routes: [
-    GoRoute(path: '/', builder: ((context, state) => const LoginExample())),
+    GoRoute(path: '/', builder: (context, state) => const LoginExample()),
     GoRoute(
         name: RouteNames.home,
         path: '/home',
-        builder: ((context, state) => const HomePage())),
+        builder: (context, state) => const HomePage()),
     GoRoute(
         name: RouteNames.profile,
         path: '/profile',
-        builder: ((context, state) => const ProfileExample())),
+        builder: (context, state) => const ProfileExample()),
     GoRoute(
         name: RouteNames.thread,
         path: '/thread/:post',
-        builder: ((context, state) => Thread(
-          post:int.parse(state.pathParameters['post']!)
-        ))),
+        builder: (context, state) =>
+            Thread(post: int.parse(state.pathParameters['post']!))),
     GoRoute(
         name: RouteNames.register,
         path: '/register',
-        builder: ((context, state) => const Register())),
+        builder: (context, state) => const Register()),
     GoRoute(
         name: RouteNames.login,
         path: '/login',
-        builder: ((context, state) => const LoginExample())),
+        builder: (context, state) => const LoginExample()),
   ]);
 }

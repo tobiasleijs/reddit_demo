@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_app/persistence/DTO/comment_dto.dart';
-import 'package:reddit_app/persistence/DTO/post_dto.dart';
-import 'package:reddit_app/persistence/DTO/user_dto.dart';
-import 'package:reddit_app/persistence/DTO/subreddit_dto.dart';
+import 'package:reddit_app/persistence/models/comment_model.dart';
+import 'package:reddit_app/persistence/models/post_model.dart';
+import 'package:reddit_app/persistence/models/user_model.dart';
+import 'package:reddit_app/persistence/models/subreddit_model.dart';
 import 'package:reddit_app/persistence/persistence_adapter.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/widgets/comments/comment.dart';
@@ -15,21 +15,22 @@ class Thread extends StatefulWidget {
   const Thread({super.key, required this.post});
 
   @override
-  // ignore: no_logic_in_create_state
-  State<Thread> createState() => _ThreadState(post);
+  State<Thread> createState() => _ThreadState();
 }
 
 class _ThreadState extends State<Thread> {
-  final int post;
   PersistencePort database = PersistenceAdapter();
-  late SubredditDTO subredditDTO;
-  late PostDTO postDTO;
-  late UserDTO poster;
+  late SubredditModel subredditModel;
+  late PostModel postModel;
+  late UserModel poster;
+  late int postid = widget.post;
 
-  _ThreadState(this.post) {
-    postDTO = database.getPostFromId(post);
-    subredditDTO = database.getSubreddit(postDTO.subreddit);
-    poster = database.getUserFromId(postDTO.authorId);
+  @override
+  void initState() {
+    postModel = database.getPostFromId(widget.post);
+    subredditModel = database.getSubreddit(postModel.subreddit);
+    poster = database.getUserFromId(postModel.authorId);
+    super.initState();
   }
 
   @override
@@ -37,7 +38,7 @@ class _ThreadState extends State<Thread> {
     return Scaffold(
       backgroundColor: const Color(0xFF76F7BF),
       appBar: AppBar(
-        title: Text(subredditDTO.name),
+        title: Text(subredditModel.name),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 63, 61, 61),
       ),
@@ -45,18 +46,20 @@ class _ThreadState extends State<Thread> {
         child: Column(
           children: [
             PostExtended(
-              photo: subredditDTO.image,
-              subreddit: subredditDTO.name,
+              photo: subredditModel.image,
+              subreddit: subredditModel.name,
               undertitle: poster.title,
-              title: postDTO.title,
-              description: postDTO.body,
+              title: postModel.title,
+              description: postModel.body,
+              postId: widget.post,
             ),
             ListView.builder(
                 shrinkWrap: true,
-                itemCount: database.getCommentsForPost(post).length,
+                itemCount: database.getCommentsForPost(widget.post).length,
                 itemBuilder: (context, index) {
-                  List<CommentDTO> comments = database.getCommentsForPost(post);
-                  UserDTO commenter =
+                  List<CommentModel> comments =
+                      database.getCommentsForPost(widget.post);
+                  UserModel commenter =
                       database.getUserFromId(comments[index].commenterId);
                   return Comment(
                       avatar: commenter.avatar,
