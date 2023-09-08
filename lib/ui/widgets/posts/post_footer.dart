@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:reddit_app/utils/go_router.dart';
 
 class PostFooter extends StatelessWidget {
-  const PostFooter({super.key});
+  final int postId;
+  final int commentCount;
+  const PostFooter(
+      {super.key, required this.postId, required this.commentCount});
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +42,15 @@ class PostFooter extends StatelessWidget {
             iconSize: 40,
             icon: const Icon(Icons.comment_rounded),
             color: const Color.fromARGB(255, 125, 125, 125),
-            onPressed: () {},
+            onPressed: () {
+              context.goNamed(RouteNames.thread,
+                  pathParameters: {'post': '$postId'});
+            },
           ),
           const SizedBox(width: 10.0),
-          const Text(
-            '138',
-            style: TextStyle(
+          Text(
+            '$commentCount',
+            style: const TextStyle(
                 fontSize: 24.0, color: Color.fromARGB(255, 125, 125, 125)),
           ),
         ]),
