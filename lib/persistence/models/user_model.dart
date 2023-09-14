@@ -8,6 +8,7 @@ class UserModel {
   final String remarks;
   final String avatar;
   final String title;
+  final String password = 'test123';
 
   const UserModel(
       {required this.id,

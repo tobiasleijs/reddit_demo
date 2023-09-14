@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_app/persistence/models/comment_model.dart';
 import 'package:reddit_app/persistence/models/post_model.dart';
 import 'package:reddit_app/persistence/persistence_adapter.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
@@ -28,26 +27,17 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 63, 61, 61),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: posts.length,
-                itemBuilder: (context, index) {
-                  PostModel post = posts[index];
-                  return PostPreview(
-                    photo: database.getSubreddit(post.subreddit).image,
-                    title: post.title,
-                    subreddit: post.subreddit,
-                    description: post.body,
-                    postId: post.id,
-                    commentCount: database.getCommentsForPost(post.id).length
-                  );
-                })
-          ],
-        ),
-      ),
+      body: ListView(children: [
+        for (PostModel post in posts) ...[
+          PostPreview(
+              photo: database.getSubreddit(post.subreddit).image,
+              title: post.title,
+              subreddit: post.subreddit,
+              description: post.body,
+              postId: post.id,
+              commentCount: database.getCommentsForPost(post.id).length)
+        ]
+      ]),
       bottomNavigationBar: const ScaffoldFooter(),
     );
   }

@@ -38,9 +38,10 @@ class _ProfileExampleState extends State<ProfileExample> {
       body: Center(
         child: Column(
           children: [
+            const Spacer(),
             SizedBox(
-              height: 400,
-              width: 800,
+              height: MediaQuery.of(context).size.height*0.9,
+              width: MediaQuery.of(context).size.width*0.9,
               child: ProfilePage(
                 showItems: true,
                 showAvatar: true,
@@ -86,6 +87,7 @@ class _ProfileExampleState extends State<ProfileExample> {
                 ),
               ),
             ),
+            const Spacer(),
           ],
         ),
       ),

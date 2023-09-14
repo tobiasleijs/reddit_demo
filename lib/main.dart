@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:reddit_app/ui/screens/home.dart';
 //import 'package:reddit_app/ui/screens/thread.dart';
 import 'package:reddit_app/ui/screens/login.dart';
+import 'package:reddit_app/ui/screens/post_creation.dart';
 import 'package:reddit_app/ui/screens/profile.dart';
 import 'package:reddit_app/ui/screens/registration.dart';
 import 'package:reddit_app/ui/screens/thread.dart';
@@ -48,5 +49,9 @@ class RedditApp extends StatelessWidget {
         name: RouteNames.login,
         path: '/login',
         builder: (context, state) => const LoginExample()),
+    GoRoute(
+        name: RouteNames.postCreation,
+        path: '/createpost',
+        builder: (context, state) => PostCreation()),
   ]);
 }

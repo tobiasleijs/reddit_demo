@@ -16,6 +16,10 @@ class ScaffoldFooter extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.add_circle),
+          label: 'Create',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
           label: 'Profile',
         ),
@@ -24,6 +28,8 @@ class ScaffoldFooter extends StatelessWidget {
         if (value == 0) {
           context.goNamed(RouteNames.home);
         } else if (value == 1) {
+          context.goNamed(RouteNames.postCreation);
+        } else if (value == 2) {
           context.goNamed(RouteNames.profile);
         }
       },

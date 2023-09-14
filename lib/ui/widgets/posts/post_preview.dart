@@ -55,13 +55,16 @@ class PostPreview extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              Text(
-                description,
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 125, 125, 125),
-                  fontSize: 24.0,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  description,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 125, 125, 125),
+                    fontSize: 24.0,
+                  ),
                 ),
               ),
               const SizedBox(height: 10.0),
