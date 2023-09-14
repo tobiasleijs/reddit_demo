@@ -12,4 +12,5 @@ abstract class PersistencePort {
   List<String> getSubredditNames();
   UserModel getUserFromId(int userId);
   void savePost(PostModel postModel);
+  void saveComment(CommentModel commentModel);
 }

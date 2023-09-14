@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/flutter_profile.dart';
+import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
 import 'package:reddit_app/utils/example_profile_data.dart';
 import 'package:reddit_app/utils/example_profile_service.dart';
 
@@ -35,60 +36,67 @@ class _ProfileExampleState extends State<ProfileExample> {
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const Spacer(),
-            SizedBox(
-              height: MediaQuery.of(context).size.height*0.9,
-              width: MediaQuery.of(context).size.width*0.9,
-              child: ProfilePage(
-                showItems: true,
-                showAvatar: true,
-                prioritizedItems: const ['remarks', 'about'],
-                wrapViewOptions: WrapViewOptions(
-                  direction: Axis.horizontal,
-                  spacing: 16,
-                ),
-                bottomActionText: 'Log out',
-                itemBuilderOptions: ItemBuilderOptions(
-                  //no label for email
-                  validators: {
-                    'first_name': (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Field empty';
-                      }
-                      return null;
+      backgroundColor: const Color(0xFF76F7BF),
+      appBar: AppBar(
+        title: const Text('Reddit Home'),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 63, 61, 61),
+      ),
+      bottomNavigationBar: const ScaffoldFooter(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.8,
+                width: MediaQuery.of(context).size.width*0.8,
+                child: ProfilePage(
+                  showItems: true,
+                  showAvatar: true,
+                  //prioritizedItems: const ['remarks', 'about'],
+                  wrapViewOptions: WrapViewOptions(
+                    direction: Axis.horizontal,
+                    spacing: 16,
+                  ),
+                  bottomActionText: 'Log out',
+                  itemBuilderOptions: ItemBuilderOptions(
+                    //no label for email
+                    validators: {
+                      'first_name': (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Field empty';
+                        }
+                        return null;
+                      },
+                      'last_name': (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Field empty';
+                        }
+                        return null;
+                      },
+                      'email': (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Field empty';
+                        }
+                        return null;
+                      },
                     },
-                    'last_name': (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Field empty';
-                      }
-                      return null;
-                    },
-                    'email': (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Field empty';
-                      }
-                      return null;
-                    },
-                  },
-                ),
-                user: _user,
-                service: ExampleProfileService(),
-                style: ProfileStyle(
-                  avatarTextStyle: const TextStyle(fontSize: 20),
-                  pagePadding: EdgeInsets.only(
-                    top: 50,
-                    bottom: 50,
-                    left: width * 0.1,
-                    right: width * 0.1,
+                  ),
+                  user: _user,
+                  service: ExampleProfileService(),
+                  style: ProfileStyle(
+                    avatarTextStyle: const TextStyle(fontSize: 20),
+                    pagePadding: EdgeInsets.only(
+                      top: 50,
+                      bottom: 50,
+                      left: width * 0.1,
+                      right: width * 0.1,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const Spacer(),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -215,4 +215,9 @@ class PersistenceAdapter implements PersistencePort {
     }
     posts.add(post.copyWith(id: (highestPostId + 1)));
   }
+
+  @override
+  void saveComment(CommentModel comment) {
+    comments.add(comment);
+  }
 }
