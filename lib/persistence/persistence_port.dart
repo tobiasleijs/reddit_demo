@@ -9,5 +9,7 @@ abstract class PersistencePort {
   CommentModel getCommentFromPostId(int postId);
   List<CommentModel> getCommentsForPost(int postId);
   SubredditModel getSubreddit(String name);
+  List<String> getSubredditNames();
   UserModel getUserFromId(int userId);
+  void savePost(PostModel postModel);
 }

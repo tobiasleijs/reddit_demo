@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
             ),
           );
         },
-        onRegister: (email, password) => print('Register!'),
+        onRegister: (email, password) {},
         onForgotPassword: (email) {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -79,9 +79,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         options: loginOptions,
         title: const Text('Forgot password'),
         description: const Text('Hello world'),
-        onRequestForgotPassword: (email) {
-          print('Forgot password email sent to $email');
-        },
+        onRequestForgotPassword: (email) {},
       ),
     );
   }

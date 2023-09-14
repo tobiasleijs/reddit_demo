@@ -5,6 +5,14 @@ import 'package:reddit_app/persistence/models/user_model.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
 
 class PersistenceAdapter implements PersistencePort {
+  static final PersistenceAdapter _persistenceAdapter =
+      PersistenceAdapter._internal();
+  factory PersistenceAdapter() {
+    return _persistenceAdapter;
+  }
+
+  PersistenceAdapter._internal();
+
   List<PostModel> posts = [
     const PostModel(
         id: 1,
@@ -192,5 +200,19 @@ class PersistenceAdapter implements PersistencePort {
   @override
   List<PostModel> getPosts() {
     return posts;
+  }
+
+  @override
+  List<String> getSubredditNames() {
+    return subreddits.map((e) => e.name).toList();
+  }
+
+  @override
+  void savePost(PostModel post) {
+    int highestPostId = 0;
+    for (PostModel postModel in posts) {
+      if (postModel.id > highestPostId) highestPostId = postModel.id;
+    }
+    posts.add(post.copyWith(id: (highestPostId + 1)));
   }
 }
