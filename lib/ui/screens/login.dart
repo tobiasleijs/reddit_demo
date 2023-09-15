@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:reddit_app/persistence/persistence_adapter.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/screens/home.dart';
+import 'package:reddit_app/utils/go_router.dart';
 import 'package:reddit_app/utils/user_simple_preferences.dart';
 
 final loginOptions = LoginOptions(
@@ -54,13 +55,7 @@ class LoginScreen extends StatelessWidget {
           if (database.loginUser(email, password) != null) {
             await UserSimplePreferences.loginUser(
                 database.loginUser(email, password)!);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) {
-                  return const HomePage();
-                },
-              ),
-            );
+            context.pushReplacementNamed(RouteNames.home);
           }
         },
         onRegister: (email, password) {},

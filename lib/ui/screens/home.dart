@@ -44,8 +44,8 @@ class _HomePageState extends State<HomePage> {
             postId: post.id,
             commentCount: database.getCommentsForPost(post.id).length,
             score: database.getUpvoteScore(post.id),
-            upvoted: database.getUpvotedForUser(loggedInUser, post.id),
-            downvoted: database.getDownvotedForUser(loggedInUser, post.id),
+            upvoted: database.getPostUpvotedForUser(loggedInUser, post.id),
+            downvoted: database.getPostDownvotedForUser(loggedInUser, post.id),
             upvote: () {
               setState(() {
                 database.upvotePost(post.id, loggedInUser);
