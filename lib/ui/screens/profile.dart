@@ -32,10 +32,8 @@ class _ProfileExampleState extends State<ProfileExample> {
 
   Future<void> _initializeUser() async {
     _userId = UserSimplePreferences.getLoggedInUser();
-    //print('UserId loaded: $_userId');
     _userModel = database.getUserFromId(_userId);
     ByteData data = await rootBundle.load('assets/${_userModel.avatar}');
-    //print('Usermodel loaded, user ${_userModel.username} has been loaded');
     profileData = ExampleProfileData().fromMap({
       'email': _userModel.email,
       'about': _userModel.about,
@@ -48,7 +46,6 @@ class _ProfileExampleState extends State<ProfileExample> {
       profileData: profileData,
     );
     setState(() {
-      //print('state has been set');
     });
   }
 
