@@ -61,6 +61,17 @@ class _ThreadState extends State<Thread> {
               description: postModel.body,
               postId: widget.post,
               commentCount: database.getCommentsForPost(widget.post).length,
+              score: database.getUpvoteScore(postid),
+              upvote: () {
+                setState(() {
+                  database.upvotePost(postid, 7);
+                });                
+              },
+              downvote: () {
+                setState(() {
+                  database.downvotePost(postid, 7);
+                });                
+              },
             ),
             for (CommentModel comment
                 in database.getCommentsForPost(widget.post)) ...[
@@ -134,7 +145,7 @@ class _ThreadState extends State<Thread> {
           ],
         ),
       ),
-      bottomNavigationBar: const ScaffoldFooter(),
+      bottomNavigationBar: ScaffoldFooter(),
     );
   }
 }

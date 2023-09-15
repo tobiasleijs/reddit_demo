@@ -5,8 +5,17 @@ import 'package:reddit_app/utils/go_router.dart';
 class PostFooter extends StatelessWidget {
   final int postId;
   final int commentCount;
+  final int score;
+  final Function upvote;
+  final Function downvote;
+
   const PostFooter(
-      {super.key, required this.postId, required this.commentCount});
+      {super.key,
+      required this.postId,
+      required this.commentCount,
+      required this.score,
+      required this.upvote,
+      required this.downvote});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +28,14 @@ class PostFooter extends StatelessWidget {
               iconSize: 40,
               icon: const Icon(Icons.arrow_circle_up),
               color: const Color.fromARGB(255, 125, 125, 125),
-              onPressed: () {},
+              onPressed: () {
+                upvote();
+              },
             ),
             const SizedBox(width: 10.0),
-            const Text(
-              '279',
-              style: TextStyle(
+            Text(
+              score.toString(),
+              style: const TextStyle(
                   fontSize: 24.0, color: Color.fromARGB(255, 125, 125, 125)),
             ),
             const SizedBox(width: 10.0),
@@ -32,7 +43,9 @@ class PostFooter extends StatelessWidget {
               iconSize: 40,
               icon: const Icon(Icons.arrow_circle_down),
               color: const Color.fromARGB(255, 125, 125, 125),
-              onPressed: () {},
+              onPressed: () {
+                downvote();
+              },
             ),
             const SizedBox(width: 40.0),
           ],

@@ -9,15 +9,22 @@ class PostPreview extends StatelessWidget {
   final String description;
   final int postId;
   final int commentCount;
+  final int score;
+  final Function upvote;
+  final Function downvote;
 
-  const PostPreview(
-      {super.key,
-      required this.photo,
-      required this.title,
-      required this.subreddit,
-      required this.description,
-      required this.postId,
-      required this.commentCount});
+  const PostPreview({
+    super.key,
+    required this.photo,
+    required this.title,
+    required this.subreddit,
+    required this.description,
+    required this.postId,
+    required this.commentCount,
+    required this.score,
+    required this.downvote,
+    required this.upvote
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +75,13 @@ class PostPreview extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              PostFooter(postId: postId, commentCount: commentCount,),
+              PostFooter(
+                postId: postId,
+                commentCount: commentCount,
+                score: score,
+                upvote: upvote,
+                downvote: downvote,
+              ),
             ],
           ),
         ),
