@@ -135,7 +135,9 @@ class _PostCreationState extends State<PostCreation> {
                             body: body,
                             subreddit: subreddit,
                             id: 1,
-                            authorId: 4));
+                            authorId: 4,
+                            upvotes: [],
+                            downvotes: []));
                         context.goNamed(RouteNames.home);
                       }
                     },
@@ -146,7 +148,7 @@ class _PostCreationState extends State<PostCreation> {
         ),
       ),
       backgroundColor: Colors.white,
-      bottomNavigationBar: const ScaffoldFooter(),
+      bottomNavigationBar: ScaffoldFooter(),
     );
   }
 }

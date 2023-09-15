@@ -20,22 +20,27 @@ class PersistenceAdapter implements PersistencePort {
         authorId: 0,
         subreddit: 'r/soccer',
         body:
-            'Ajax has all the ingredients to emerge victorious in the Europa League this season. With their relentless attacking prowess, skillful midfielders, and a solid defense, they\'ve shown an unwavering determination to claim the title. Under the astute guidance of their coach, their tactical acumen and ability to adapt to different opponents have been impressive. Furthermore, their rich history and experience in European competitions give them the edge, and their young talents continue to shine on the international stage. With a perfect blend of youth and experience, Ajax is poised to conquer the Europa League and add another prestigious trophy to their illustrious legacy.'),
+            'Ajax has all the ingredients to emerge victorious in the Europa League this season. With their relentless attacking prowess, skillful midfielders, and a solid defense, they\'ve shown an unwavering determination to claim the title. Under the astute guidance of their coach, their tactical acumen and ability to adapt to different opponents have been impressive. Furthermore, their rich history and experience in European competitions give them the edge, and their young talents continue to shine on the international stage. With a perfect blend of youth and experience, Ajax is poised to conquer the Europa League and add another prestigious trophy to their illustrious legacy.',
+        upvotes: [2, 3, 4],
+        downvotes: []),
     const PostModel(
         id: 2,
         title: 'How to get to radiant asap?',
         authorId: 1,
         subreddit: 'r/VALORANT',
         body:
-            'Hey fellow Valorant players! I\'ve been grinding the ranks lately, and I\'m really eager to reach Radiant as soon as possible. Any tips or strategies you could share to help me climb the ladder quickly? I\'ve been working on my aim and communication, but I feel like there\'s more I can do to improve my game. Any agent recommendations or specific techniques that have worked for you in your journey to Radiant? Thanks in advance for the advice!'),
+            'Hey fellow Valorant players! I\'ve been grinding the ranks lately, and I\'m really eager to reach Radiant as soon as possible. Any tips or strategies you could share to help me climb the ladder quickly? I\'ve been working on my aim and communication, but I feel like there\'s more I can do to improve my game. Any agent recommendations or specific techniques that have worked for you in your journey to Radiant? Thanks in advance for the advice!',
+        upvotes: [1, 5],
+        downvotes: [6]),
     const PostModel(
         id: 3,
         title:
             'How Max Verstappen got the record for most consecutive grand prix wins',
         authorId: 2,
         subreddit: 'r/formula1',
-        body:
-            'Max Verstappen secured the record for the most consecutive Grand Prix wins by delivering a remarkable performance in the 2023 Formula 1 season. Driving for Red Bull Racing, he achieved a total of nine consecutive wins from the Miami Grand Prix in May to the Dutch Grand Prix in August. Verstappen\'s success was attributed to his exceptional driving skills, the competitiveness of the Red Bull car, and strategic team decisions that optimized his race performances during this impressive streak, solidifying his reputation as one of the sport\'s most formidable talents.')
+        body: 'Max Verstappen secured the record for the most consecutive Grand Prix wins by delivering a remarkable performance in the 2023 Formula 1 season. Driving for Red Bull Racing, he achieved a total of nine consecutive wins from the Miami Grand Prix in May to the Dutch Grand Prix in August. Verstappen\'s success was attributed to his exceptional driving skills, the competitiveness of the Red Bull car, and strategic team decisions that optimized his race performances during this impressive streak, solidifying his reputation as one of the sport\'s most formidable talents.',
+        upvotes: [1, 5],
+        downvotes: []),
   ];
 
   List<CommentModel> comments = [
@@ -219,5 +224,55 @@ class PersistenceAdapter implements PersistencePort {
   @override
   void saveComment(CommentModel comment) {
     comments.add(comment);
+  }
+
+  @override
+  void upvotePost(int postId, int userId) {
+    PostModel post = getPostFromId(postId);
+    List<int> upvotes = List.from(post.upvotes);
+    List<int> downvotes = List.from(post.downvotes);
+    int postIndex = posts.indexOf(post);
+
+
+    if (!upvotes.contains(userId)) {
+      upvotes.add(userId);
+      if (downvotes.contains(userId)) {
+        downvotes.remove(userId);
+      }
+      posts[postIndex] = post.copyWith(upvotes: upvotes, downvotes: downvotes);
+    } else {
+      upvotes.remove(userId);
+      posts[postIndex] = post.copyWith(upvotes: upvotes);
+    }
+    print(
+        'Upvoted comment, updated upvote score is: ${getUpvoteScore(postId)}');
+  }
+
+  @override
+  void downvotePost(int postId, int userId) {
+    PostModel post = getPostFromId(postId);
+    List<int> upvotes = List.from(post.upvotes);
+    List<int> downvotes = List.from(post.downvotes);
+    int postIndex = posts.indexOf(post);
+
+    if (!downvotes.contains(userId)) {
+      downvotes.add(userId);
+      if (upvotes.contains(userId)) {
+        upvotes.remove(userId);
+      }
+      posts[postIndex] = post.copyWith(upvotes: upvotes, downvotes: downvotes);
+    } else {
+      downvotes.remove(userId);
+      posts[postIndex] = post.copyWith(downvotes: downvotes);
+    }
+
+    print(
+        'Downvoted comment, updated upvote score is: ${getUpvoteScore(postId)}');
+  }
+
+  @override
+  int getUpvoteScore(int postId) {
+    PostModel post = getPostFromId(postId);
+    return post.upvotes.length - post.downvotes.length;
   }
 }
