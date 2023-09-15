@@ -325,7 +325,6 @@ class PersistenceAdapter implements PersistencePort {
 
   @override
   void upvoteComment(int commentId, int userId) {
-    print('Upvoted comment with id: $commentId');
     CommentModel comment = _getCommentFromId(commentId);
     int commentIndex = comments.indexOf(comment);
     List<int> upvotes = List.of(comment.upvotes);
@@ -346,7 +345,6 @@ class PersistenceAdapter implements PersistencePort {
 
   @override
   void downvoteComment(int commentId, int userId) {
-    print('Downvoted comment with id: $commentId');
     CommentModel comment = _getCommentFromId(commentId);
     int commentIndex = comments.indexOf(comment);
     List<int> upvotes = List.of(comment.upvotes);
@@ -368,9 +366,6 @@ class PersistenceAdapter implements PersistencePort {
   @override
   int getCommentScore(int commentId) {
     CommentModel comment = _getCommentFromId(commentId);
-
-    print(
-        'Comment score is: ${comment.upvotes.length - comment.downvotes.length}');
     return comment.upvotes.length - comment.downvotes.length;
   }
 
