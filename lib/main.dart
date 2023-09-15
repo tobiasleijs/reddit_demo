@@ -9,9 +9,14 @@ import 'package:reddit_app/ui/screens/profile.dart';
 import 'package:reddit_app/ui/screens/registration.dart';
 import 'package:reddit_app/ui/screens/thread.dart';
 import 'package:reddit_app/utils/go_router.dart';
+import 'package:reddit_app/utils/user_simple_preferences.dart';
 //import 'package:reddit_app/ui/screens/profile.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await UserSimplePreferences.init();
+
   runApp(RedditApp());
 }
 
