@@ -4,6 +4,7 @@ import 'package:reddit_app/persistence/persistence_adapter.dart';
 import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/widgets/posts/post_preview.dart';
 import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
+import 'package:reddit_app/utils/user_simple_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +15,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   PersistencePort database = PersistenceAdapter();
   late List<PostModel> posts;
+  late int loggedInUser = UserSimplePreferences.getLoggedInUser();
   _HomePageState() {
     posts = database.getPosts();
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -37,20 +44,22 @@ class _HomePageState extends State<HomePage> {
             postId: post.id,
             commentCount: database.getCommentsForPost(post.id).length,
             score: database.getUpvoteScore(post.id),
+            upvoted: database.getUpvotedForUser(loggedInUser, post.id),
+            downvoted: database.getDownvotedForUser(loggedInUser, post.id),
             upvote: () {
               setState(() {
-                database.upvotePost(post.id, 7);
-              });              
+                database.upvotePost(post.id, loggedInUser);
+              });
             },
             downvote: () {
               setState(() {
-                database.downvotePost(post.id, 7);
-              });              
+                database.downvotePost(post.id, loggedInUser);
+              });
             },
           ),
         ]
       ]),
-      bottomNavigationBar: ScaffoldFooter(),
+      bottomNavigationBar: const ScaffoldFooter(),
     );
   }
 }

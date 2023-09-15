@@ -8,6 +8,7 @@ class ScaffoldFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       backgroundColor: const Color(0xFF499167),
       selectedItemColor: Colors.white,
       items: const <BottomNavigationBarItem>[
@@ -35,6 +36,8 @@ class ScaffoldFooter extends StatelessWidget {
           context.goNamed(RouteNames.postCreation);
         } else if (value == 2) {
           context.goNamed(RouteNames.profile);
+        } else if (value == 3) {
+          context.goNamed(RouteNames.home);
         }
       },
     );
