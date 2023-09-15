@@ -63,27 +63,42 @@ class _ThreadState extends State<Thread> {
               postId: widget.post,
               commentCount: database.getCommentsForPost(widget.post).length,
               score: database.getUpvoteScore(postid),
-              upvoted: database.getUpvotedForUser(loggedInUser, postid),
-              downvoted: database.getDownvotedForUser(loggedInUser, postid),
+              upvoted: database.getPostUpvotedForUser(loggedInUser, postid),
+              downvoted: database.getPostDownvotedForUser(loggedInUser, postid),
               upvote: () {
                 setState(() {
                   database.upvotePost(postid, loggedInUser);
-                });                
+                });
               },
               downvote: () {
                 setState(() {
                   database.downvotePost(postid, loggedInUser);
-                });                
+                });
               },
             ),
             for (CommentModel comment
                 in database.getCommentsForPost(widget.post)) ...[
               Comment(
-                  avatar: database.getUserFromId(comment.commenterId).avatar,
-                  comment: comment.comment,
-                  role: database.getUserFromId(comment.commenterId).title,
-                  username:
-                      database.getUserFromId(comment.commenterId).username),
+                avatar: database.getUserFromId(comment.commenterId).avatar,
+                comment: comment.comment,
+                role: database.getUserFromId(comment.commenterId).title,
+                username: database.getUserFromId(comment.commenterId).username,
+                upvoteComment: () {
+                  setState(() {
+                    database.upvoteComment(comment.id, loggedInUser);
+                  });                  
+                },
+                downvoteComment: () {
+                  setState(() {
+                    database.downvoteComment(comment.id, loggedInUser);
+                  });                  
+                },
+                upvoted:
+                    database.getCommentUpvotedForUser(loggedInUser, comment.id),
+                downvoted: database.getCommentDownvotedForUser(
+                    loggedInUser, comment.id),
+                score: database.getCommentScore(comment.id),
+              ),
             ],
             Form(
                 key: _formKey,
@@ -130,7 +145,10 @@ class _ThreadState extends State<Thread> {
                           database.saveComment(CommentModel(
                               comment: comment,
                               postId: postid,
-                              commenterId: UserSimplePreferences.getLoggedInUser()));
+                              upvotes: [],
+                              downvotes: [],
+                              commenterId:
+                                  UserSimplePreferences.getLoggedInUser()));
                           setState(() {
                             FocusScope.of(context).unfocus();
                             textEditingController.clear();

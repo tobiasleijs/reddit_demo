@@ -6,6 +6,11 @@ class Comment extends StatelessWidget {
   final String avatar;
   final String comment;
   final String role;
+  final int score;
+  final bool upvoted;
+  final bool downvoted;
+  final Function upvoteComment;
+  final Function downvoteComment;
 
   const Comment({
     super.key,
@@ -13,6 +18,11 @@ class Comment extends StatelessWidget {
     required this.avatar,
     required this.comment,
     required this.role,
+    required this.score,
+    required this.upvoted,
+    required this.downvoted,
+    required this.downvoteComment,
+    required this.upvoteComment,
   });
 
   @override
@@ -47,31 +57,29 @@ class Comment extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10.0),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Icon(
-                Icons.more_vert,
-                size: 30,
-                color: Color.fromARGB(255, 125, 125, 125),
+              IconButton(
+                icon: Icon(Icons.arrow_circle_up_rounded,
+                    size: 30, color: upvoted ? const Color(0xFF499167) : const Color.fromARGB(255, 125, 125, 125)),
+                onPressed: () {
+                  upvoteComment();
+                },
               ),
-              SizedBox(width: 20.0),
-              Icon(
-                Icons.arrow_circle_up_rounded,
-                size: 30,
-                color: Color.fromARGB(255, 125, 125, 125),
-              ),
-              SizedBox(width: 10.0),
+              const SizedBox(width: 10.0),
               Text(
-                '279',
-                style: TextStyle(
+                score.toString(),
+                style: const TextStyle(
                     fontSize: 20.0, color: Color.fromARGB(255, 125, 125, 125)),
               ),
-              SizedBox(width: 10.0),
-              Icon(
-                Icons.arrow_circle_down_rounded,
-                size: 30,
-                color: Color.fromARGB(255, 125, 125, 125),
+              const SizedBox(width: 10.0),
+              IconButton(
+                icon: Icon(Icons.arrow_circle_down_rounded,
+                    size: 30, color: downvoted ? const Color(0xFF499167) : const Color.fromARGB(255, 125, 125, 125)),
+                onPressed: () {
+                  downvoteComment();
+                },
               ),
             ],
           ),

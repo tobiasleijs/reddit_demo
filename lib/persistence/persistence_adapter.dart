@@ -45,45 +45,80 @@ class PersistenceAdapter implements PersistencePort {
 
   List<CommentModel> comments = [
     const CommentModel(
+        id: 1,
         commenterId: 3,
         comment:
             'To quickly climb the Valorant ranks, prioritize aim training, communicate effectively, learn map details, master multiple agents, emphasize teamwork, manage your economy wisely, watch professional gameplay for tips, and strive for consistency in your performance.',
-        postId: 2),
+        postId: 2,
+        upvotes: [3, 5, 7],
+        downvotes: [2]),
     const CommentModel(
+        id: 2,
         commenterId: 4,
         comment:
             'Look, folks, you wouldn\'t believe the winning strategy I\'ve got for you in Valorant. Tremendous game, very tremendous. You\'ve got to aim big, okay? We\'re talking the best aim, folks, nobody aims better than me. And communication, let me tell you, nobody communicates like I do. My communication is beautiful, just beautiful. Build a team, a fantastic team, the best team, and make Valorant great again. That\'s what we\'re going to do, folks. Believe me.',
-        postId: 2),
-    const CommentModel(commenterId: 5, comment: 'Just be me lol', postId: 2),
+        postId: 2,
+        upvotes: [1, 2],
+        downvotes: []),
     const CommentModel(
+        id: 3,
+        commenterId: 5,
+        comment: 'Just be me lol',
+        postId: 2,
+        upvotes: [3, 2, 1],
+        downvotes: [7, 6]),
+    const CommentModel(
+        id: 4,
         commenterId: 2,
+        upvotes: [6, 5, 7, 2],
+        downvotes: [],
         comment:
             'Ajax certainly has the potential to win the Europa League, but they\'ll face tough competition from other clubs like Manchester United, Arsenal, and Napoli. It\'s all about performance on the day, and we\'ll have to wait and see how they handle the pressure.',
         postId: 1),
     const CommentModel(
+        id: 5,
         commenterId: 4,
+        upvotes: [0, 1, 2, 3, 5, 6, 7],
+        downvotes: [],
         comment:
             'Let me tell you, folks, Ajax is going to win the Europa League, and they\'re going to win it bigly! Believe me, I know winners, and Ajax is a winning team. No one else even comes close. It\'s going to be beautiful, folks, just beautiful.',
         postId: 1),
     const CommentModel(
+        id: 6,
         commenterId: 0,
+        upvotes: [1, 2, 3],
+        downvotes: [],
         comment:
             'While Ajax does have a strong team, let\'s not forget that the Europa League is a highly competitive tournament. There are several other quality teams in the mix, so it won\'t be a walk in the park for them. But, I\'m hoping for an exciting tournament!',
         postId: 1),
     const CommentModel(
+        id: 7,
         commenterId: 3,
+        upvotes: [],
+        downvotes: [],
         comment:
             'Ajax has a strong squad and they\'ve shown great form recently. Their attacking prowess and solid defense make them a serious contender for the Europa League title. Let\'s go, Ajax!',
         postId: 1),
     const CommentModel(
+        id: 8,
         commenterId: 1,
+        upvotes: [2],
+        downvotes: [],
         comment:
             'Ajax has a rich history in European competitions, and their youth academy consistently produces top talent. However, it\'s essential to consider that football can be unpredictable. Anything can happen in knockout rounds, so let\'s enjoy the journey and see how far they can go!',
         postId: 1),
     const CommentModel(
-        commenterId: 6, comment: 'This guy is cheating', postId: 3),
+        id: 9,
+        commenterId: 6,
+        upvotes: [],
+        downvotes: [0, 1, 2, 3, 4, 5, 7],
+        comment: 'This guy is cheating',
+        postId: 3),
     const CommentModel(
+        id: 10,
         commenterId: 7,
+        upvotes: [2],
+        downvotes: [],
         comment: 'MAX MAX MAX\nSUPER MAX MAX\nSUPER SUPER MAX MAX MAX',
         postId: 3),
   ];
@@ -223,7 +258,7 @@ class PersistenceAdapter implements PersistencePort {
 
   @override
   void saveComment(CommentModel comment) {
-    comments.add(comment);
+    comments.add(comment.copyWith(id: comments.length + 1));
   }
 
   @override
@@ -233,22 +268,15 @@ class PersistenceAdapter implements PersistencePort {
     List<int> downvotes = List.from(post.downvotes);
     int postIndex = posts.indexOf(post);
 
-    print(
-        'User with id $userId pushed the upvote button for post with id $postId');
-    print('Upvoters now are: ${getPostFromId(postId).upvotes}');
-
     if (!upvotes.contains(userId)) {
       upvotes.add(userId);
       if (downvotes.contains(userId)) {
         downvotes.remove(userId);
       }
-      posts[postIndex] = post.copyWith(upvotes: upvotes, downvotes: downvotes);
     } else {
       upvotes.remove(userId);
-      posts[postIndex] = post.copyWith(upvotes: upvotes);
     }
-    print(
-        'Upvoted comment, updated upvote score is: ${getUpvoteScore(postId)}');
+    posts[postIndex] = post.copyWith(upvotes: upvotes, downvotes: downvotes);
   }
 
   @override
@@ -263,14 +291,10 @@ class PersistenceAdapter implements PersistencePort {
       if (upvotes.contains(userId)) {
         upvotes.remove(userId);
       }
-      posts[postIndex] = post.copyWith(upvotes: upvotes, downvotes: downvotes);
     } else {
       downvotes.remove(userId);
-      posts[postIndex] = post.copyWith(downvotes: downvotes);
     }
-
-    print(
-        'Downvoted comment, updated upvote score is: ${getUpvoteScore(postId)}');
+    posts[postIndex] = post.copyWith(upvotes: upvotes, downvotes: downvotes);
   }
 
   @override
@@ -290,12 +314,72 @@ class PersistenceAdapter implements PersistencePort {
   }
 
   @override
-  bool getUpvotedForUser(int userId, int postId) {
+  bool getPostUpvotedForUser(int userId, int postId) {
     return getPostFromId(postId).upvotes.contains(userId);
   }
 
   @override
-  bool getDownvotedForUser(int userId, int postId) {
+  bool getPostDownvotedForUser(int userId, int postId) {
     return getPostFromId(postId).downvotes.contains(userId);
+  }
+
+  @override
+  void upvoteComment(int commentId, int userId) {
+    CommentModel comment = _getCommentFromId(commentId);
+    int commentIndex = comments.indexOf(comment);
+    List<int> upvotes = List.of(comment.upvotes);
+    List<int> downvotes = List.of(comment.downvotes);
+
+    if (!upvotes.contains(userId)) {
+      upvotes.add(userId);
+      if (downvotes.contains(userId)) {
+        downvotes.remove(userId);
+      }
+    } else {
+      upvotes.remove(userId);
+    }
+
+    comments[commentIndex] =
+        comment.copyWith(upvotes: upvotes, downvotes: downvotes);
+  }
+
+  @override
+  void downvoteComment(int commentId, int userId) {
+    CommentModel comment = _getCommentFromId(commentId);
+    int commentIndex = comments.indexOf(comment);
+    List<int> upvotes = List.of(comment.upvotes);
+    List<int> downvotes = List.of(comment.downvotes);
+
+    if (!downvotes.contains(userId)) {
+      downvotes.add(userId);
+      if (upvotes.contains(userId)) {
+        upvotes.remove(userId);
+      }
+    } else {
+      downvotes.remove(userId);
+    }
+
+    comments[commentIndex] =
+        comment.copyWith(upvotes: upvotes, downvotes: downvotes);
+  }
+
+  @override
+  int getCommentScore(int commentId) {
+    CommentModel comment = _getCommentFromId(commentId);
+    return comment.upvotes.length - comment.downvotes.length;
+  }
+
+  CommentModel _getCommentFromId(int id) {
+    return comments.singleWhere((element) => element.id == id);
+  }
+
+  @override
+  bool getCommentDownvotedForUser(int userId, int commentId) {
+    return _getCommentFromId(commentId).downvotes.contains(userId);
+  }
+
+  @override
+  bool getCommentUpvotedForUser(int userId, int commentId) {
+    return _getCommentFromId(commentId).upvotes.contains(userId);
   }
 }

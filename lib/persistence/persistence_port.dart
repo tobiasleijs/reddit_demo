@@ -13,10 +13,15 @@ abstract class PersistencePort {
   UserModel getUserFromId(int userId);
   void savePost(PostModel postModel);
   void saveComment(CommentModel commentModel);
+  void upvoteComment(int commentId, int userId);
+  void downvoteComment(int commentId, int userId);
+  int getCommentScore(int commentId);
+  bool getCommentUpvotedForUser(int userId, int commentId);
+  bool getCommentDownvotedForUser(int userId, int commentId);
   void upvotePost(int postId, int userId);
   void downvotePost(int postId, int userId);
   int getUpvoteScore(int postId);
   int? loginUser(String email, String password);
-  bool getUpvotedForUser(int userId, int postId);
-  bool getDownvotedForUser(int userId, int postId);
+  bool getPostUpvotedForUser(int userId, int postId);
+  bool getPostDownvotedForUser(int userId, int postId);
 }
