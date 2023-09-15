@@ -16,4 +16,7 @@ abstract class PersistencePort {
   void upvotePost(int postId, int userId);
   void downvotePost(int postId, int userId);
   int getUpvoteScore(int postId);
+  int? loginUser(String email, String password);
+  bool getUpvotedForUser(int userId, int postId);
+  bool getDownvotedForUser(int userId, int postId);
 }

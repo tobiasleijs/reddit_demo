@@ -12,19 +12,22 @@ class PostPreview extends StatelessWidget {
   final int score;
   final Function upvote;
   final Function downvote;
+  final bool upvoted;
+  final bool downvoted;
 
-  const PostPreview({
-    super.key,
-    required this.photo,
-    required this.title,
-    required this.subreddit,
-    required this.description,
-    required this.postId,
-    required this.commentCount,
-    required this.score,
-    required this.downvote,
-    required this.upvote
-  });
+  const PostPreview(
+      {super.key,
+      required this.photo,
+      required this.title,
+      required this.subreddit,
+      required this.description,
+      required this.postId,
+      required this.commentCount,
+      required this.score,
+      required this.downvote,
+      required this.upvote,
+      required this.upvoted,
+      required this.downvoted});
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +84,8 @@ class PostPreview extends StatelessWidget {
                 score: score,
                 upvote: upvote,
                 downvote: downvote,
+                upvoted: upvoted,
+                downvoted: downvoted,
               ),
             ],
           ),

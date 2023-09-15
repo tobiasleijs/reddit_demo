@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:go_router/go_router.dart';
+import 'package:reddit_app/persistence/persistence_adapter.dart';
+import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/screens/home.dart';
+import 'package:reddit_app/utils/user_simple_preferences.dart';
 
 final loginOptions = LoginOptions(
   emailDecoration: const InputDecoration(
@@ -31,27 +35,33 @@ class LoginExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final PersistencePort database = PersistenceAdapter();
+
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: EmailPasswordLoginForm(
         options: loginOptions,
-        onLogin: (email, password) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) {
-                return const HomePage();
-              },
-            ),
-          );
+        onLogin: (email, password) async {
+          if (database.loginUser(email, password) != null) {
+            await UserSimplePreferences.loginUser(
+                database.loginUser(email, password)!);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) {
+                  return const HomePage();
+                },
+              ),
+            );
+          }
         },
         onRegister: (email, password) {},
         onForgotPassword: (email) {

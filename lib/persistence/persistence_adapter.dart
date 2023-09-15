@@ -114,7 +114,7 @@ class PersistenceAdapter implements PersistencePort {
         username: 'SebasVettel',
         firstname: 'Sebastian',
         lastname: 'Vettel',
-        email: 'Sebastian_Vettel@redbull.com',
+        email: 'sebastianvettel@redbull.com',
         about: 'Four time world champion.',
         remarks: '',
         avatar: 'users/weltmeister.png',
@@ -233,6 +233,9 @@ class PersistenceAdapter implements PersistencePort {
     List<int> downvotes = List.from(post.downvotes);
     int postIndex = posts.indexOf(post);
 
+    print(
+        'User with id $userId pushed the upvote button for post with id $postId');
+    print('Upvoters now are: ${getPostFromId(postId).upvotes}');
 
     if (!upvotes.contains(userId)) {
       upvotes.add(userId);
@@ -274,5 +277,25 @@ class PersistenceAdapter implements PersistencePort {
   int getUpvoteScore(int postId) {
     PostModel post = getPostFromId(postId);
     return post.upvotes.length - post.downvotes.length;
+  }
+
+  @override
+  int? loginUser(String email, String password) {
+    for (UserModel user in users) {
+      if (user.email == email && user.password == password) {
+        return user.id;
+      }
+    }
+    return null;
+  }
+
+  @override
+  bool getUpvotedForUser(int userId, int postId) {
+    return getPostFromId(postId).upvotes.contains(userId);
+  }
+
+  @override
+  bool getDownvotedForUser(int userId, int postId) {
+    return getPostFromId(postId).downvotes.contains(userId);
   }
 }

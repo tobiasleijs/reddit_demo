@@ -8,6 +8,8 @@ class PostFooter extends StatelessWidget {
   final int score;
   final Function upvote;
   final Function downvote;
+  final bool upvoted;
+  final bool downvoted;
 
   const PostFooter(
       {super.key,
@@ -15,7 +17,9 @@ class PostFooter extends StatelessWidget {
       required this.commentCount,
       required this.score,
       required this.upvote,
-      required this.downvote});
+      required this.downvote,
+      required this.upvoted,
+      required this.downvoted});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class PostFooter extends StatelessWidget {
             IconButton(
               iconSize: 40,
               icon: const Icon(Icons.arrow_circle_up),
-              color: const Color.fromARGB(255, 125, 125, 125),
+              color: upvoted ? const Color(0xFF499167) : const Color.fromARGB(255, 125, 125, 125),
               onPressed: () {
                 upvote();
               },
@@ -42,7 +46,7 @@ class PostFooter extends StatelessWidget {
             IconButton(
               iconSize: 40,
               icon: const Icon(Icons.arrow_circle_down),
-              color: const Color.fromARGB(255, 125, 125, 125),
+              color: downvoted ? const Color(0xFF499167) : const Color.fromARGB(255, 125, 125, 125),
               onPressed: () {
                 downvote();
               },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:reddit_app/persistence/models/comment_model.dart';
 import 'package:reddit_app/persistence/models/post_model.dart';
 import 'package:reddit_app/persistence/models/user_model.dart';
@@ -9,7 +8,7 @@ import 'package:reddit_app/persistence/persistence_port.dart';
 import 'package:reddit_app/ui/widgets/comments/comment.dart';
 import 'package:reddit_app/ui/widgets/posts/post_extended.dart';
 import 'package:reddit_app/ui/widgets/scaffold/footer.dart';
-import 'package:reddit_app/utils/go_router.dart';
+import 'package:reddit_app/utils/user_simple_preferences.dart';
 
 class Thread extends StatefulWidget {
   final int post;
@@ -29,6 +28,7 @@ class _ThreadState extends State<Thread> {
   late int postid = widget.post;
   final TextEditingController textEditingController = TextEditingController();
   final scrollController = ScrollController();
+  late int loggedInUser;
 
   late String comment;
 
@@ -37,6 +37,7 @@ class _ThreadState extends State<Thread> {
     postModel = database.getPostFromId(widget.post);
     subredditModel = database.getSubreddit(postModel.subreddit);
     poster = database.getUserFromId(postModel.authorId);
+    loggedInUser = UserSimplePreferences.getLoggedInUser();
     super.initState();
   }
 
@@ -62,14 +63,16 @@ class _ThreadState extends State<Thread> {
               postId: widget.post,
               commentCount: database.getCommentsForPost(widget.post).length,
               score: database.getUpvoteScore(postid),
+              upvoted: database.getUpvotedForUser(loggedInUser, postid),
+              downvoted: database.getDownvotedForUser(loggedInUser, postid),
               upvote: () {
                 setState(() {
-                  database.upvotePost(postid, 7);
+                  database.upvotePost(postid, loggedInUser);
                 });                
               },
               downvote: () {
                 setState(() {
-                  database.downvotePost(postid, 7);
+                  database.downvotePost(postid, loggedInUser);
                 });                
               },
             ),
@@ -127,7 +130,7 @@ class _ThreadState extends State<Thread> {
                           database.saveComment(CommentModel(
                               comment: comment,
                               postId: postid,
-                              commenterId: 1));
+                              commenterId: UserSimplePreferences.getLoggedInUser()));
                           setState(() {
                             FocusScope.of(context).unfocus();
                             textEditingController.clear();
@@ -145,7 +148,7 @@ class _ThreadState extends State<Thread> {
           ],
         ),
       ),
-      bottomNavigationBar: ScaffoldFooter(),
+      bottomNavigationBar: const ScaffoldFooter(),
     );
   }
 }
