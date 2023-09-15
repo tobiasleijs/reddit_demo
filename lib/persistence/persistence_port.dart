@@ -13,4 +13,7 @@ abstract class PersistencePort {
   UserModel getUserFromId(int userId);
   void savePost(PostModel postModel);
   void saveComment(CommentModel commentModel);
+  void upvotePost(int postId, int userId);
+  void downvotePost(int postId, int userId);
+  int getUpvoteScore(int postId);
 }

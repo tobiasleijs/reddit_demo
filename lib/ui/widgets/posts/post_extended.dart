@@ -10,6 +10,9 @@ class PostExtended extends StatelessWidget {
   final String description;
   final int postId;
   final int commentCount;
+  final int score;
+  final Function upvote;
+  final Function downvote;
 
   const PostExtended(
       {super.key,
@@ -19,7 +22,10 @@ class PostExtended extends StatelessWidget {
       required this.title,
       required this.description,
       required this.postId,
-      required this.commentCount});
+      required this.commentCount,
+      required this.score,
+      required this.upvote,
+      required this.downvote});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +72,9 @@ class PostExtended extends StatelessWidget {
                   PostFooter(
                     postId: postId,
                     commentCount: commentCount,
+                    score: score,
+                    upvote: upvote,
+                    downvote: downvote,
                   ),
                 ],
               ),

@@ -30,15 +30,27 @@ class _HomePageState extends State<HomePage> {
       body: ListView(children: [
         for (PostModel post in posts) ...[
           PostPreview(
-              photo: database.getSubreddit(post.subreddit).image,
-              title: post.title,
-              subreddit: post.subreddit,
-              description: post.body,
-              postId: post.id,
-              commentCount: database.getCommentsForPost(post.id).length)
+            photo: database.getSubreddit(post.subreddit).image,
+            title: post.title,
+            subreddit: post.subreddit,
+            description: post.body,
+            postId: post.id,
+            commentCount: database.getCommentsForPost(post.id).length,
+            score: database.getUpvoteScore(post.id),
+            upvote: () {
+              setState(() {
+                database.upvotePost(post.id, 7);
+              });              
+            },
+            downvote: () {
+              setState(() {
+                database.downvotePost(post.id, 7);
+              });              
+            },
+          ),
         ]
       ]),
-      bottomNavigationBar: const ScaffoldFooter(),
+      bottomNavigationBar: ScaffoldFooter(),
     );
   }
 }

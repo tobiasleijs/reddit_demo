@@ -42,7 +42,7 @@ class _ProfileExampleState extends State<ProfileExample> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 63, 61, 61),
       ),
-      bottomNavigationBar: const ScaffoldFooter(),
+      bottomNavigationBar: ScaffoldFooter(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

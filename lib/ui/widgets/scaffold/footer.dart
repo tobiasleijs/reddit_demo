@@ -23,6 +23,10 @@ class ScaffoldFooter extends StatelessWidget {
           icon: Icon(Icons.account_circle),
           label: 'Profile',
         ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: 'Search',
+        ),
       ],
       onTap: (value) {
         if (value == 0) {
